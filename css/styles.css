@@ -66,6 +66,7 @@ tr.expand td .home:after {
 .booking {
     position: absolute;
     text-align: center;
+    min-height: 36px;
     padding: 8px;
     margin-bottom: 1px;
 }
@@ -73,10 +74,6 @@ tr.expand td .home:after {
 tr.expand .booking {
     position: relative;
 }
-
-/*tr.expand {
-    
-}*/
 
 .booking.booked {
     background-color: #DA4453;

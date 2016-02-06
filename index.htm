@@ -40,7 +40,8 @@
         <div class="timeline table-responsive card-2" id="timeline" data-start="">
             <table class="table">
                 <thead id="timeline-header"></thead>
-                <tbody id="timeline-table"><tbody>
+                <tbody id="timeline-table">
+                    <tbody>
             </table>
         </div>
     </div>
@@ -69,7 +70,7 @@
         </div>
     </div>
     <!-- End View Booking Modal -->
-    
+
     <!-- New Booking Request Modal -->
     <div id="new-booking-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -100,7 +101,7 @@
         <button class="btn btn-primary" type="button" onclick="update()">Update</button>
     </div>
     <!-- End Data Console -->
-
+    
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -115,7 +116,8 @@
             $('#code').text(data);
             Timeline.init(bedData, {
                 theme: 'green',
-                onClickView: viewBooking
+                onClickView: viewBooking,
+                onClickRow: newBooking
             });
         });
         
@@ -127,6 +129,7 @@
         
         // Example custom function for view click handler
         function viewBooking(e) {
+            e.stopPropagation();
             var el = e.target,
                 ref = el.dataset['ref'],
                 client = el.dataset['client'],
@@ -168,6 +171,14 @@
             $('#view-booking-modal').modal();
         }
         
+        // Click handler for empty row event
+        function newBooking(e) {                                                 
+            e.stopPropagation();
+            var el = e.target,
+                col = parseInt(e.offsetX / 30, 10),
+                $modal;
+            console.log(col);
+        }
     </script>
 
 </body>

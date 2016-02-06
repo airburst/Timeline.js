@@ -18,7 +18,10 @@ var bedData = {
                     duration: 4
                 },
                 {
-                    ref: 'b03',
+                    ref: 'b03'
+                },
+                {
+                    ref: 'b04',
                     status: 'in-use',
                     client: 'IN USE',
                     start: '24/02/2016',

@@ -12,8 +12,11 @@
         $table:    document.getElementById('timeline-table'),                       // Table element
         $tableHead: document.getElementById('timeline-header'),                     // Table head element
         $header:   document.getElementsByClassName('row-timeline-heading')[0],      // Heading element
-        onClickRow:  function(e) { console.log(e); },                               // Click handler for empty row event
-        onClickView: function(e) { console.log(e); },                               // Click handler for viewing an event
+        onClickView: function(e) { console.log('booking', e); },                    // Click handler for viewing an event
+        onClickRow: function(e) {                                                   // Click handler for empty row event
+            e.stopPropagation();
+            console.log('column', parseInt(e.offsetX / 30, 10));
+        },
         
         init: function init(data, options) {
             if (options !== undefined) { this.setOptions(options); }
@@ -145,26 +148,40 @@
             return row;
         },
         
+        // <td class="row-timeline">
+        //     <div class="bookings-container">
+        //         <div class="booking booked" id="b01" data-ref="b01" data-status="booked" data-start="07/02/2016" data-client="Mark Fairhurst"
+        //         data-duration="999" style="left: 29.9997px; width: 871px;">Mark Fairhurst</div>
+        //         <div class="booking requested" id="b02" data-ref="b02" data-status="requested" data-start="10/02/2016"
+        //         data-client="John Doe" data-duration="4" style="left: 120px; width: 119px;">John Doe</div>
+        //         <div class="booking undefined" id="b03" data-ref="b03" data-status="undefined" data-start="undefined"
+        //         data-client="undefined" data-duration="undefined" style="left: 0px;">undefined</div>
+        //         <div class="booking in-use" id="b04" data-ref="b04" data-status="in-use" data-start="24/02/2016"
+        //         data-client="IN USE" data-duration="5" style="left: 540px; width: 149px;">IN USE</div>
+        //     </div>
+        // </td>
+        
+        
         // Add an individual booking rectangle to element el
         drawBooking: function drawBooking(el, ref, status, start, duration, client) {            
             var div = document.createElement('div'),
-                content = document.createTextNode(client),
+                content = document.createTextNode((client !== undefined) ? client : ''),
                 offset = this.positionFromDate(start), /* Number of days from start */
                 left = ((offset * 30) < 0) ? 0 : offset * 30,
                 right = ((left + (duration * 30)) > this.width) ? this.width - 1 : (left + (duration * 30) - 1);
 
             // Styles
-            div.className = 'booking ' + status;
+            div.className = 'booking ' +  ((status !== undefined) ? status : '');
             div.id = ref;
             div.style.left = left + 'px';
             div.style.width = (right - left) + 'px';
             
             // Data and Events
-            div.dataset['ref'] = ref;
-            div.dataset['status'] = status;
-            div.dataset['start'] = start;
-            div.dataset['client'] = client;
-            div.dataset['duration'] = duration;
+            if (ref !== undefined) { div.dataset['ref'] = ref; }
+            if (status !== undefined) { div.dataset['status'] = status; }
+            if (start !== undefined) { div.dataset['start'] = start; }
+            if (client !== undefined) { div.dataset['client'] = client; }
+            if (duration !== undefined) { div.dataset['duration'] = duration; }
             div.addEventListener('click', this.onClickView);
             
             div.appendChild(content);
@@ -202,7 +219,7 @@
                 }
             }
         }
-     
+        
     };
     
     window.Timeline = Timeline;
