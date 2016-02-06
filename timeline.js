@@ -96,22 +96,30 @@
         // draw each booking rectangle into the correct row
         drawBookings: function drawBookings(data) {
             var timeline = this,
-                $row;
+                $row,
+                $bed;
                 
             data.homes.forEach(function(home) {
                 // Create new row
                 $row = timeline.drawRow(home.name);
                 
-                // Create each booking rectangle in row
-                home.bookings.forEach(function(booking) {
-                    timeline.drawBooking(
-                        $row.children[1].children[0], 
-                        booking.ref, 
-                        booking.status, 
-                        booking.start, 
-                        booking.duration, 
-                        booking.client
-                    )
+                // Add beds
+                home.beds.forEach(function(bed) {
+                    $bed = timeline.drawBed(bed.id, bed.name);
+                    
+                    // Create each booking rectangle in row
+                    bed.bookings.forEach(function(booking) {
+                        timeline.drawBooking(
+                            $bed, 
+                            booking.ref, 
+                            booking.status, 
+                            booking.start, 
+                            booking.duration, 
+                            booking.client
+                        )
+                    });
+                    // DOM is tr > td.row-timeline > div.bookings-container
+                    $row.children[1].children[0].appendChild($bed);
                 });
                 
                 // Append rows to timeline table
@@ -130,7 +138,7 @@
                 home = document.createTextNode(name);
                 
             heading.className = 'row-heading ' + this.theme;
-            bookings.className = 'row-timeline',
+            bookings.className = 'row-timeline';
             bookingsContainer.className = 'bookings-container';
             div.className = this.rowHeadClassName;
             div.appendChild(home);
@@ -141,26 +149,20 @@
             
             // Add row heading expand and contract handler
             heading.addEventListener('click', this.toggle);
-            
-            // Add booking container click handler (available day)
-            bookings.addEventListener('click', this.onClickRow);
-            
             return row;
         },
         
-        // <td class="row-timeline">
-        //     <div class="bookings-container">
-        //         <div class="booking booked" id="b01" data-ref="b01" data-status="booked" data-start="07/02/2016" data-client="Mark Fairhurst"
-        //         data-duration="999" style="left: 29.9997px; width: 871px;">Mark Fairhurst</div>
-        //         <div class="booking requested" id="b02" data-ref="b02" data-status="requested" data-start="10/02/2016"
-        //         data-client="John Doe" data-duration="4" style="left: 120px; width: 119px;">John Doe</div>
-        //         <div class="booking undefined" id="b03" data-ref="b03" data-status="undefined" data-start="undefined"
-        //         data-client="undefined" data-duration="undefined" style="left: 0px;">undefined</div>
-        //         <div class="booking in-use" id="b04" data-ref="b04" data-status="in-use" data-start="24/02/2016"
-        //         data-client="IN USE" data-duration="5" style="left: 540px; width: 149px;">IN USE</div>
-        //     </div>
-        // </td>
-        
+        // Add a bed div element with a click handler
+        drawBed: function drawBed(id, name) {
+            var bed = document.createElement('div'),
+                bedName = document.createTextNode(name);
+            bed.id = id;
+            bed.className = 'bed';
+                        
+            // Add bed container click handler (available day)
+            bed.addEventListener('click', this.onClickRow);
+            return bed;
+        },
         
         // Add an individual booking rectangle to element el
         drawBooking: function drawBooking(el, ref, status, start, duration, client) {            

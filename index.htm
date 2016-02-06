@@ -78,12 +78,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create New Booking Request</h4>
+                    <h4 class="modal-title">Create New Booking Request for Bed: <span class="bed-id"></span></h4>
                 </div>
                 <div class="modal-body">
-                    <p>Client: <span class="client"></span></p>
-                    <p>Start Date: <span class="start"></span></p>
-                    <p>Duration: <span class="duration"></span></p>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="client-name" class="col-sm-2 control-label">Client Name</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="client-name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="care-cat" class="col-sm-2 control-label">Care Category</label>
+                            <div class="col-sm-10">
+                                <select class="form-control">
+                                    <option>Residential</option>
+                                    <option>Dementia</option>
+                                    <option>Learning Difficulties</option>
+                                    <option>Physical Disability</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="start-date" class="col-sm-2 control-label">Start Date</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="start-date" placeholder="dd/mm/yyyy">
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary new-booking-button" onclick="alert('Request Booking')">Request Booking</button>
@@ -101,7 +123,7 @@
         <button class="btn btn-primary" type="button" onclick="update()">Update</button>
     </div>
     <!-- End Data Console -->
-    
+
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -175,9 +197,16 @@
         function newBooking(e) {                                                 
             e.stopPropagation();
             var el = e.target,
+                bedId = el.id,
                 col = parseInt(e.offsetX / 30, 10),
+                date = moment(Timeline.startDate).add(col, 'days'),
                 $modal;
-            console.log(col);
+                
+            $modal = $('#new-booking-modal');
+            $('.bed-id', $modal).text(bedId);
+            $('#start-date', $modal).val(date.format('DD/MM/YYYY'));
+            
+            $modal.modal();
         }
     </script>
 

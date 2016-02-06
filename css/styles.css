@@ -35,6 +35,14 @@ th.row-timeline-heading, td.row-timeline {
     overflow-y: scroll;
 }
 
+
+.date {
+    width: 30px;
+    text-align: center;
+    float: left;
+    padding: 8px 0 8px 0;
+}
+
 .home {
     /*height: 100%;*/
     padding: 8px;
@@ -52,11 +60,14 @@ tr.expand td .home:after {
     background: url("../images/ic_expand_less_white_24dp_1x.png") no-repeat top right;
 }
 
-.date {
-    width: 30px;
-    text-align: center;
-    float: left;
-    padding: 8px 0 8px 0;
+.bed {
+    position: absolute;
+    min-height: 36px;
+    padding: 0;
+}
+
+tr.expand .bed {
+    position: relative;
 }
 
 .bookings-container {
@@ -69,10 +80,6 @@ tr.expand td .home:after {
     min-height: 36px;
     padding: 8px;
     margin-bottom: 1px;
-}
-
-tr.expand .booking {
-    position: relative;
 }
 
 .booking.booked {

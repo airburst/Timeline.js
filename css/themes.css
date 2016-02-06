@@ -4,7 +4,8 @@
     color: #222;
     /*border-top-color: #2E9E82 !important;*/
 }
-th.default {
+th.default,
+td.default .bed {
     /*border-bottom-color: #2E9E82 !important;*/
     border-bottom-width: 1px !important;
 }
@@ -18,7 +19,8 @@ th.row-timeline-heading.default {
     color: white;
     border-top-color: #2E9E82 !important;
 }
-th.green {
+th.green,
+td.green .bed {
     border-bottom-color: #2E9E82 !important;
     border-bottom-width: 1px !important;
 }
@@ -32,7 +34,8 @@ th.row-timeline-heading.green {
     color: white;
     border-top-color: #659BE2 !important;
 }
-th.blue {
+th.blue,
+td.blue .bed {
     border-bottom-color: #659BE2 !important;
     border-bottom-width: 1px !important;
 }
