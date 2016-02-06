@@ -21,19 +21,19 @@
         onHoverBed: function (e) {
             var klass,
                 target = e.target;
-            if (target.className === 'bed') {
+            if (target.className.indexOf('bed') > -1) {
                 klass = document.getElementById(target.id).className;
-                klass = (klass.indexOf('hover') > -1) ? klass : klass + 'hover';
-                document.getElementById(id).className = klass;
+                klass = (klass.indexOf('hover') > -1) ? klass : klass + ' hover';
+                document.getElementById(target.id).className = klass;
             }
         },
         onOutBed: function(e) {
             var klass,
                 target = e.target;
-            if (target.className === 'bed') {
+            if (target.className.indexOf('bed') > -1) {
                 klass = document.getElementById(target.id).className;
                 klass = (klass.indexOf('hover') > -1) ? klass.replace(' hover', '') : klass;
-                document.getElementById(id).className = klass;
+                document.getElementById(target.id).className = klass;
             }
         },
 

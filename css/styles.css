@@ -68,6 +68,7 @@ tr.expand td .home:after {
 
 tr.expand .bed {
     position: relative;
+    margin-bottom: 1px;
 }
 
 .bookings-container {
@@ -98,5 +99,6 @@ tr.expand .bed {
 }
 
 .hover {
-    background-color: yellow;
+    background-color: #F8DDE0;
+    background-image: url(../images/timeline-hover.gif);
 }
