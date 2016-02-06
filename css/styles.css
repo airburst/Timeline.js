@@ -96,3 +96,7 @@ tr.expand .bed {
     background-color: #434A54;
     color: white;
 }
+
+.hover {
+    background-color: yellow;
+}

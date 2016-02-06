@@ -1,6 +1,6 @@
-(function() {
-    var Timeline =  {
-        
+(function () {
+    var Timeline = {
+
         bookingData: {},                                                            // Would come from ajax
         colWidth: 30,                                                               // Width of each col in px
         width: 0,                                                                   // Width of timeline col in px
@@ -9,15 +9,34 @@
         startDate: '',                                                              // Start date for timeline
         theme: 'default',                                                           // Theme class (default | blue | green)
         $timeline: document.getElementById('timeline'),                             // Timeline component element
-        $table:    document.getElementById('timeline-table'),                       // Table element
+        $table: document.getElementById('timeline-table'),                       // Table element
         $tableHead: document.getElementById('timeline-header'),                     // Table head element
-        $header:   document.getElementsByClassName('row-timeline-heading')[0],      // Heading element
-        onClickView: function(e) { console.log('booking', e); },                    // Click handler for viewing an event
-        onClickRow: function(e) {                                                   // Click handler for empty row event
+        $header: document.getElementsByClassName('row-timeline-heading')[0],      // Heading element
+        onClickView: function (e) { console.log('booking', e); },                    // Click handler for viewing an event
+        onClickBed: function (e) {                                                   // Click handler for empty bed event
             e.stopPropagation();
-            console.log('column', parseInt(e.offsetX / 30, 10));
+            var col = parseInt(e.offsetX / 30, 10);
+            console.log(col);
         },
-        
+        onHoverBed: function (e) {
+            var klass,
+                target = e.target;
+            if (target.className === 'bed') {
+                klass = document.getElementById(target.id).className;
+                klass = (klass.indexOf('hover') > -1) ? klass : klass + 'hover';
+                document.getElementById(id).className = klass;
+            }
+        },
+        onOutBed: function(e) {
+            var klass,
+                target = e.target;
+            if (target.className === 'bed') {
+                klass = document.getElementById(target.id).className;
+                klass = (klass.indexOf('hover') > -1) ? klass.replace(' hover', '') : klass;
+                document.getElementById(id).className = klass;
+            }
+        },
+
         init: function init(data, options) {
             if (options !== undefined) { this.setOptions(options); }
             
@@ -27,8 +46,8 @@
             // Set days in table headings
             // Get start date from timeline component.  If empty, use today.
             var startDateString = (this.startDate != '') ? this.startDate : this.$timeline.dataset['start'],
-                startDate = (startDateString != '') ? 
-                    moment(startDateString, 'DD/MM/YYYY') : 
+                startDate = (startDateString != '') ?
+                    moment(startDateString, 'DD/MM/YYYY') :
                     moment().hour(0).minute(0).second(0);
             this.startDate = moment(startDate);
             
@@ -39,7 +58,7 @@
             this.bookingData = data;
             this.drawBookings(this.bookingData);
         },
-        
+
         setOptions: function setOptions(options) {
             var key;
             for (key in options) {
@@ -84,11 +103,11 @@
         },
         
         // Write day numbers into timeline header
-        addDayToHeader: function addDayToHeader(el, text, className) { 
+        addDayToHeader: function addDayToHeader(el, text, className) {
             var div = document.createElement('div'),
-                content = document.createTextNode(text); 
+                content = document.createTextNode(text);
             div.className = className;
-            div.appendChild(content); 
+            div.appendChild(content);
             el.appendChild(div);
         },
         
@@ -98,25 +117,25 @@
             var timeline = this,
                 $row,
                 $bed;
-                
-            data.homes.forEach(function(home) {
+
+            data.homes.forEach(function (home) {
                 // Create new row
                 $row = timeline.drawRow(home.name);
                 
                 // Add beds
-                home.beds.forEach(function(bed) {
+                home.beds.forEach(function (bed) {
                     $bed = timeline.drawBed(bed.id, bed.name);
                     
                     // Create each booking rectangle in row
-                    bed.bookings.forEach(function(booking) {
+                    bed.bookings.forEach(function (booking) {
                         timeline.drawBooking(
-                            $bed, 
-                            booking.ref, 
-                            booking.status, 
-                            booking.start, 
-                            booking.duration, 
+                            $bed,
+                            booking.ref,
+                            booking.status,
+                            booking.start,
+                            booking.duration,
                             booking.client
-                        )
+                            )
                     });
                     // DOM is tr > td.row-timeline > div.bookings-container
                     $row.children[1].children[0].appendChild($bed);
@@ -136,7 +155,7 @@
                 bookingsContainer = document.createElement('div'),
                 div = document.createElement('div'),
                 home = document.createTextNode(name);
-                
+
             heading.className = 'row-heading ' + this.theme;
             bookings.className = 'row-timeline';
             bookingsContainer.className = 'bookings-container';
@@ -159,13 +178,15 @@
             bed.id = id;
             bed.className = 'bed';
                         
-            // Add bed container click handler (available day)
-            bed.addEventListener('click', this.onClickRow);
+            // Add bed container hover and click handlers (available day)
+            bed.addEventListener('mouseover', this.onHoverBed);
+            bed.addEventListener('mouseout', this.onOutBed);
+            bed.addEventListener('click', this.onClickBed);
             return bed;
         },
         
         // Add an individual booking rectangle to element el
-        drawBooking: function drawBooking(el, ref, status, start, duration, client) {            
+        drawBooking: function drawBooking(el, ref, status, start, duration, client) {
             var div = document.createElement('div'),
                 content = document.createTextNode((client !== undefined) ? client : ''),
                 offset = this.positionFromDate(start), /* Number of days from start */
@@ -173,7 +194,7 @@
                 right = ((left + (duration * 30)) > this.width) ? this.width - 1 : (left + (duration * 30) - 1);
 
             // Styles
-            div.className = 'booking ' +  ((status !== undefined) ? status : '');
+            div.className = 'booking ' + ((status !== undefined) ? status : '');
             div.id = ref;
             div.style.left = left + 'px';
             div.style.width = (right - left) + 'px';
@@ -185,9 +206,9 @@
             if (client !== undefined) { div.dataset['client'] = client; }
             if (duration !== undefined) { div.dataset['duration'] = duration; }
             div.addEventListener('click', this.onClickView);
-            
+
             div.appendChild(content);
-            el.appendChild(div);  
+            el.appendChild(div);
         },
         
         // When clicking a row heading, expand or collapse bookings in row
@@ -206,12 +227,20 @@
                 }
             }
         },
-        
+
         destroy: function destroy() {
             this.removeChildren(this.$tableHead);
             this.removeChildren(this.$table);
         },
-        
+
+        removeHovers: function removeHovers() {
+            var h = document.getElementsByClassName('hover'),
+                i;
+            for (i = 0; i < h.length; i++) {
+                h[0].parentElement.removeChild(h[0]);
+            }
+        },
+
         removeChildren: function removeChildren(el) {
             var i, l;
             if (el.hasChildNodes()) {
@@ -221,9 +250,9 @@
                 }
             }
         }
-        
+
     };
-    
+
     window.Timeline = Timeline;
-    
+
 })();
