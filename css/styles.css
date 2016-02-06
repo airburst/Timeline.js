@@ -1,0 +1,94 @@
+body {
+    background-color: #eeeded;
+    padding-top: 160px;
+}
+table { 
+    margin-bottom: 0 !important;
+}
+.timeline>table {
+    border: 0 !important;
+}
+    
+.timeline th {
+    margin: 0;
+}
+.timeline th, .timeline td {
+    padding: 0 !important;
+}
+td.row-timeline {
+    background-image: url(../images/timeline.gif); 
+}
+td.row-heading {
+    width: 238px;
+}
+th.row-timeline-heading, td.row-timeline {
+    width: 902px;
+}
+.top-margin-60 {
+    margin-top: 60px;
+}
+.code-container {
+    max-height: 400px;
+    width: 100%;
+    padding: 15px;
+    font-family: 'Consolas';
+    overflow-y: scroll;
+}
+
+.home {
+    /*height: 100%;*/
+    padding: 8px;
+}
+
+td .home:after {
+    content: "";
+    float: right;
+    background: url("../images/ic_expand_more_white_24dp_1x.png") no-repeat top right;
+    width: 24px;
+    height: 24px;
+}
+
+tr.expand td .home:after {
+    background: url("../images/ic_expand_less_white_24dp_1x.png") no-repeat top right;
+}
+
+.date {
+    width: 30px;
+    text-align: center;
+    float: left;
+    padding: 8px 0 8px 0;
+}
+
+.bookings-container {
+    position: relative;
+}
+
+.booking {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 1px;
+}
+
+tr.expand .booking {
+    position: relative;
+}
+
+/*tr.expand {
+    
+}*/
+
+.booking.booked {
+    background-color: #DA4453;
+    color: white;
+}
+
+.booking.requested {
+    background-color: #F6BB42;
+    color: #222;
+}
+
+.booking.in-use {
+    background-color: #434A54;
+    color: white;
+}

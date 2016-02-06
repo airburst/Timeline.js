@@ -1,0 +1,24 @@
+{
+  "name": "timeline.js",
+  "version": "1.0.0",
+  "description": "Timeline of events UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airburst/Timeline.js.git"
+  },
+  "author": "Mark Fairhurst",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/airburst/Timeline.js/issues"
+  },
+  "homepage": "https://github.com/airburst/Timeline.js#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.0",
+    "moment": "^2.11.2"
+  }
+}

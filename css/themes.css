@@ -1,0 +1,41 @@
+/* Default */
+.default {
+    background-color: #f2f2f2;
+    color: #222;
+    /*border-top-color: #2E9E82 !important;*/
+}
+th.default {
+    /*border-bottom-color: #2E9E82 !important;*/
+    border-bottom-width: 1px !important;
+}
+th.row-timeline-heading.default {
+    background-image: url(../images/timeline-header.gif);
+}
+
+/* Green */
+.green {
+    background-color: #298E75;
+    color: white;
+    border-top-color: #2E9E82 !important;
+}
+th.green {
+    border-bottom-color: #2E9E82 !important;
+    border-bottom-width: 1px !important;
+}
+th.row-timeline-heading.green {
+    background-image: url(../images/timeline-header-white.png);
+}
+
+/* Blue */
+.blue {
+    background-color: #4A89DC;
+    color: white;
+    border-top-color: #659BE2 !important;
+}
+th.blue {
+    border-bottom-color: #659BE2 !important;
+    border-bottom-width: 1px !important;
+}
+th.row-timeline-heading.blue {
+    background-image: url(../images/timeline-header-white.png);
+}

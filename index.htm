@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Timeline test</title>
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/cards.css" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/themes.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Booking Timeline</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+
+    <!-- Timeline Grid -->
+    <div class="container">
+        <div class="timeline table-responsive card-2" id="timeline" data-start="">
+            <table class="table">
+                <thead id="timeline-header"></thead>
+                <tbody id="timeline-table"><tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End Timeline Grid -->
+
+
+    <!-- View Booking Modal -->
+    <div id="view-booking-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Booking Details for Ref: <span class="booking-ref"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p>Client: <span class="client"></span></p>
+                    <p>Start Date: <span class="start"></span></p>
+                    <p>Duration: <span class="duration"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary cancel-booking-button" onclick="alert('Cancel Booking')">Cancel Booking</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End View Booking Modal -->
+    
+    <!-- New Booking Request Modal -->
+    <div id="new-booking-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create New Booking Request</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Client: <span class="client"></span></p>
+                    <p>Start Date: <span class="start"></span></p>
+                    <p>Duration: <span class="duration"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary new-booking-button" onclick="alert('Request Booking')">Request Booking</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Booking Request Modal -->
+
+
+    <!-- Data Console -->
+    <div class="container top-margin-60">
+        <textarea class="code-container" id="code" rows="20"></textarea>
+        <button class="btn btn-primary" type="button" onclick="update()">Update</button>
+    </div>
+    <!-- End Data Console -->
+
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <script src="beds.js"></script>
+    <script src="timeline.js"></script>
+
+    <script>
+        // Present the bed data for debug
+        $(document).ready(function() {
+            var data = JSON.stringify(bedData, null, 4);
+            $('#code').text(data);
+            Timeline.init(bedData, {
+                theme: 'green',
+                onClickView: viewBooking
+            });
+        });
+        
+        // Update data in timeline -- Test harness
+        function update() {
+            bedData = JSON.parse($('#code').val());
+            Timeline.init(bedData);
+        }
+        
+        // Example custom function for view click handler
+        function viewBooking(e) {
+            var el = e.target,
+                ref = el.dataset['ref'],
+                client = el.dataset['client'],
+                status = el.dataset['status'],
+                start = el.dataset['start'],
+                duration = el.dataset['duration'],
+                $modal;
+
+            // Hide all action buttons
+            $('.cancel-booking-button').hide();
+
+            // Identify the modal based on status
+            switch (status) {
+                case 'booked':
+                    $modal = $('#view-booking-modal');
+                    break;
+                case 'requested':
+                    $modal = $('#view-booking-modal');
+                    $('.cancel-booking-button').show();
+                    break;
+                case 'in-use':
+                    $modal = $('#view-booking-modal');
+                    break;
+                case 'available':
+                    $modal = $('#new-booking-modal');
+                    break;
+                default:
+                    $modal = $('#view-booking-modal');
+                    break;
+            }
+         
+            // Update modal with values
+            // We would fetch booking data from API here...
+            $('.booking-ref', $modal).text(ref);
+            $('.client', $modal).text(client);
+            $('.start', $modal).text(start);
+            $('.duration', $modal).text(duration + ' day' + ((duration > 1) ? 's' : ''));
+            
+            $('#view-booking-modal').modal();
+        }
+        
+    </script>
+
+</body>
+
+</html>
