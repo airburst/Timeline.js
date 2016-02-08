@@ -120,7 +120,7 @@
             
             // Draw days into header
             for (d = 0; d < numberOfDays; d++) {
-                this.addDayToHeader(th2, date.format('D'), this.dayClassName);
+                this.addDayToHeader(th2, date, this.dayClassName);
                 date.add(1, 'days');
             }
             // Update endDate of component
@@ -128,11 +128,16 @@
         },
         
         // Write day numbers into timeline header
-        addDayToHeader: function addDayToHeader(el, text, className) {
+        addDayToHeader: function addDayToHeader(el, date, className) {
             var div = document.createElement('div'),
-                content = document.createTextNode(text);
+                span = document.createElement('span'),
+                day = document.createTextNode(date.format('ddd')),
+                d = document.createTextNode(date.format('D'));
             div.className = className;
-            div.appendChild(content);
+            span.className = 'day';
+            span.appendChild(day);
+            div.appendChild(span);
+            div.appendChild(d);
             el.appendChild(div);
         },
         

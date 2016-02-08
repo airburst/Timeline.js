@@ -43,6 +43,12 @@ th.row-timeline-heading, td.row-timeline {
     padding: 8px 0 8px 0;
 }
 
+.day {
+    font-size: 0.6em;
+    display: block;
+    font-variant: small-caps;
+}
+
 .home {
     /*height: 100%;*/
     padding: 8px;
