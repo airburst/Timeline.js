@@ -7,13 +7,15 @@
         dayClassName: 'date',                                                       // Class name for days divs
         rowHeadClassName: 'home',                                                   // Class name for row heading
         startDate: '',                                                              // Start date for timeline
+        endDate: '',                                                                // Computed end date for timeline
+        data: {},                                                                   // Store initial bed data
         theme: 'default',                                                           // Theme class (default | blue | green)
         $timeline: document.getElementById('timeline'),                             // Timeline component element
-        $table: document.getElementById('timeline-table'),                       // Table element
+        $table: document.getElementById('timeline-table'),                          // Table element
         $tableHead: document.getElementById('timeline-header'),                     // Table head element
-        $header: document.getElementsByClassName('row-timeline-heading')[0],      // Heading element
-        onClickView: function (e) { console.log('booking', e); },                    // Click handler for viewing an event
-        onClickBed: function (e) {                                                   // Click handler for empty bed event
+        $header: document.getElementsByClassName('row-timeline-heading')[0],        // Heading element
+        onClickView: function (e) { console.log('booking', e); },                   // Click handler for viewing an event
+        onClickBed: function (e) {                                                  // Click handler for empty bed event
             e.stopPropagation();
             var col = parseInt(e.offsetX / 30, 10);
             console.log(col);
@@ -40,6 +42,13 @@
         init: function init(data, options) {
             if (options !== undefined) { this.setOptions(options); }
             
+            // Store data
+            if (data !== undefined) {
+                this.data = data;
+            } else {
+                data = this.data;   //TODO: circular - need to ensure data for first time
+            }
+            
             // Destroy current instance
             this.destroy();
             
@@ -64,6 +73,17 @@
             for (key in options) {
                 this[key] = options[key];
             }
+        },
+        
+        advance: function advance(days) {
+            if (days === undefined) { days = 7; }
+            this.startDate.add(days, 'days');
+            this.init();
+        },
+        
+        back: function back(days) {
+            if (days === undefined) { days = 7; }
+            this.advance(-days);
         },
         
         // Calculate how many days dateString occurs from start date of timeline
@@ -100,6 +120,8 @@
                 this.addDayToHeader(th2, date.format('D'), this.dayClassName);
                 date.add(1, 'days');
             }
+            // Update endDate of component
+            this.endDate = date.add(-1, 'days');
         },
         
         // Write day numbers into timeline header
@@ -189,26 +211,30 @@
         drawBooking: function drawBooking(el, ref, status, start, duration, client) {
             var div = document.createElement('div'),
                 content = document.createTextNode((client !== undefined) ? client : ''),
+                date = moment(start, 'DD/MM/YYYY'),
                 offset = this.positionFromDate(start), /* Number of days from start */
                 left = ((offset * 30) < 0) ? 0 : offset * 30,
                 right = ((left + (duration * 30)) > this.width) ? this.width - 1 : (left + (duration * 30) - 1);
 
-            // Styles
-            div.className = 'booking ' + ((status !== undefined) ? status : '');
-            div.id = ref;
-            div.style.left = left + 'px';
-            div.style.width = (right - left) + 'px';
-            
-            // Data and Events
-            if (ref !== undefined) { div.dataset['ref'] = ref; }
-            if (status !== undefined) { div.dataset['status'] = status; }
-            if (start !== undefined) { div.dataset['start'] = start; }
-            if (client !== undefined) { div.dataset['client'] = client; }
-            if (duration !== undefined) { div.dataset['duration'] = duration; }
-            div.addEventListener('click', this.onClickView);
+            // Only draw booking if it falls in current timeline range
+            if ((date < this.endDate) && (date.add(duration, 'days') > this.startDate)) {
+                // Styles
+                div.className = 'booking ' + ((status !== undefined) ? status : '');
+                div.id = ref;
+                div.style.left = left + 'px';
+                div.style.width = (right - left) + 'px';
+                
+                // Data and Events
+                if (ref !== undefined) { div.dataset['ref'] = ref; }
+                if (status !== undefined) { div.dataset['status'] = status; }
+                if (start !== undefined) { div.dataset['start'] = start; }
+                if (client !== undefined) { div.dataset['client'] = client; }
+                if (duration !== undefined) { div.dataset['duration'] = duration; }
+                div.addEventListener('click', this.onClickView);
 
-            div.appendChild(content);
-            el.appendChild(div);
+                div.appendChild(content);
+                el.appendChild(div);
+            }
         },
         
         // When clicking a row heading, expand or collapse bookings in row
