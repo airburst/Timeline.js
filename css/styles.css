@@ -1,6 +1,6 @@
 body {
     background-color: #eeeded;
-    padding-top: 160px;
+    padding-top: 120px;
 }
 table { 
     margin-bottom: 0 !important;
@@ -106,12 +106,13 @@ tr.expand .bed {
 .btn-advance,
 .btn-back {
     min-height: 24px;
+    margin-bottom: 5px;
 }
 
 .btn-advance {
-    background: url("../images/ic_keyboard_arrow_right_white_24dp_1x.png") no-repeat;
+    background: url("../images/ic_keyboard_arrow_right_white_24dp_1x.png") no-repeat center;
 }
 
 .btn-back {
-    background: url("../images/ic_keyboard_arrow_left_white_24dp_1x.png") no-repeat;
+    background: url("../images/ic_keyboard_arrow_left_white_24dp_1x.png") no-repeat center;
 }

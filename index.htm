@@ -28,21 +28,31 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Theme <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" onclick="Timeline.init(bedData, {theme: 'default',onClickView: viewBooking,onClickBed: newBooking})">Default</a></li>
+                                <li><a href="#" onclick="Timeline.init(bedData, {theme: 'blue',onClickView: viewBooking,onClickBed: newBooking})">Blue</a></li>
+                                <li><a href="#" onclick="Timeline.init(bedData, {theme: 'green',onClickView: viewBooking,onClickBed: newBooking})">Green</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
             <!-- /.container-fluid -->
         </nav>
     </header>
-    
-    
+
+
 
     <!-- Timeline Grid -->
     <div class="container">
         <!-- Nav buttons -->
-        <button class="btn btn-default btn-back" onclick="Timeline.back()"></button>
-        <button class="btn btn-default btn-advance" onclick="Timeline.advance()"></button>
-    
+        <button class="btn btn-success btn-back" onclick="Timeline.back()">&nbsp;</button>
+        <button class="btn btn-success btn-advance" onclick="Timeline.advance()">&nbsp;</button>
+
         <div class="timeline table-responsive card-2" id="timeline" data-start="">
             <table class="table">
                 <thead id="timeline-header"></thead>
