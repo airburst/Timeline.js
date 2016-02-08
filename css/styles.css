@@ -60,6 +60,18 @@ tr.expand td .home:after {
     background: url("../images/ic_expand_less_white_24dp_1x.png") no-repeat top right;
 }
 
+th .home:after {
+    content: "";
+    float: right;
+    background: url("../images/ic_expand_more_white_24dp_1x.png") no-repeat top right;
+    width: 24px;
+    height: 24px;
+}
+
+tr.expand th .home:after {
+    background: url("../images/ic_expand_less_white_24dp_1x.png") no-repeat top right;
+}
+
 .bed {
     position: absolute;
     min-height: 36px;

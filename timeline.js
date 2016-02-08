@@ -111,6 +111,9 @@
             row.appendChild(th2);
             this.$tableHead.appendChild(row);
             
+            // Add row heading expand and contract handler
+            div.addEventListener('click', this.toggle.bind(this));
+            
             // Setup header 
             this.width = th2.offsetWidth;
             numberOfDays = parseInt(this.width / this.colWidth, 10);
@@ -240,17 +243,39 @@
         // When clicking a row heading, expand or collapse bookings in row
         // The toggle class is "expand" and is applied to the row element
         toggle: function toggle(e) {
-            var target = e.target;
+            var target = e.target,
+                owner;
             while (target.tagName !== 'TR') {
                 target = target.parentElement;
             }
-
+            
             if (target !== undefined) {
+                owner = target.parentElement.tagName;
                 if (target.className.indexOf(' expand') > -1) {
                     target.className = target.className.replace(' expand', '');
+                    if (owner === 'THEAD') { this.contractAll(); }
                 } else {
                     target.className += ' expand';
+                    if (owner === 'THEAD') { this.expandAll(); }
                 }
+            }
+        },
+        
+        expandAll: function() {
+            var rows = document.getElementsByTagName('tr'),
+                i;
+            for (i = 0; i < rows.length; i++) {
+                if (rows[i].className.indexOf(' expand') === -1) {
+                    rows[i].className += ' expand';
+                }
+            }
+        },
+        
+        contractAll: function() {
+            var rows = document.getElementsByTagName('tr'),
+                i;
+            for (i = 0; i < rows.length; i++) { 
+                rows[i].className = rows[i].className.replace(' expand', '');
             }
         },
 
