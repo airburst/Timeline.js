@@ -10,6 +10,7 @@
         endDate: '',                                                                // Computed end date for timeline
         data: {},                                                                   // Store initial bed data
         theme: 'default',                                                           // Theme class (default | blue | green)
+        showBackButton: false,                                                      // Whether back button can be displayed
         $timeline: document.getElementById('timeline'),                             // Timeline component element
         $table: document.getElementById('timeline-table'),                          // Table element
         $tableHead: document.getElementById('timeline-header'),                     // Table head element
@@ -76,14 +77,34 @@
         },
         
         advance: function advance(days) {
-            if (days === undefined) { days = 7; }
-            this.startDate.add(days, 'days');
+            var next;
+            if (days === undefined) {
+                // Go to first monday in next month
+                next = this.startDate.endOf('month').add(1, 'day');
+                while (next.day() !== 1) { next.add(1, 'day'); }
+                this.startDate = next;
+            } else {
+                // Advance requested number of days
+                this.startDate.add(days, 'days');
+            }
             this.init();
         },
         
         back: function back(days) {
-            if (days === undefined) { days = 7; }
-            this.advance(-days);
+            var last;
+            if (days === undefined) {
+                // Go to first monday in last month
+                last = this.startDate.startOf('month').subtract(1, 'month');                
+                while (last.day() !== 1) { last.add(1, 'day'); }
+                // Don't go earlier than today
+                this.startDate = (last < moment().hour(0).minute(0).second(0)) ?
+                    moment().hour(0).minute(0).second(0) : 
+                    last;
+                this.init();
+            } else {
+                // Go back requested number of days
+                this.advance(-days);
+            }
         },
         
         // Calculate how many days dateString occurs from start date of timeline
