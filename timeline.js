@@ -155,6 +155,8 @@
                 day = document.createTextNode(date.format('ddd')),
                 d = document.createTextNode(date.format('D'));
             div.className = className;
+            // First day of month: need darker border
+            if (date.date() === 1) { div.className += ' first'; }
             span.className = 'day';
             span.appendChild(day);
             div.appendChild(span);
@@ -306,6 +308,7 @@
         },
 
         destroy: function destroy() {
+            // TODO: verify that eventlisteners are all detached
             this.removeChildren(this.$tableHead);
             this.removeChildren(this.$table);
         },

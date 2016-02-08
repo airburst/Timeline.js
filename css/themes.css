@@ -12,6 +12,9 @@ td.default .bed {
 th.row-timeline-heading.default {
     background-image: url(../images/timeline-header.gif);
 }
+.first {
+    border-left: 2px solid black;
+}
 
 /* Green */
 .green {
@@ -27,6 +30,9 @@ td.green .bed {
 th.row-timeline-heading.green {
     background-image: url(../images/timeline-header-white.png);
 }
+.green .first {
+    border-left: 2px solid white;
+}
 
 /* Blue */
 .blue {
@@ -41,4 +47,7 @@ td.blue .bed {
 }
 th.row-timeline-heading.blue {
     background-image: url(../images/timeline-header-white.png);
+}
+.blue .first {
+    border-left: 2px solid white;
 }
