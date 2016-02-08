@@ -15,6 +15,10 @@ th.row-timeline-heading.default {
 .first {
     border-left: 2px solid black;
 }
+.default .bed-label {
+    background-color: #ccc;
+    border-bottom: 1px solid #ccc;
+}
 
 /* Green */
 .green {
@@ -33,6 +37,10 @@ th.row-timeline-heading.green {
 .green .first {
     border-left: 2px solid white;
 }
+.green .bed-label {
+    background-color: #2e9e82;
+    border-bottom: 1px solid #2e9e82;
+}
 
 /* Blue */
 .blue {
@@ -50,4 +58,8 @@ th.row-timeline-heading.blue {
 }
 .blue .first {
     border-left: 2px solid white;
+}
+.blue .bed-label {
+    background-color: #659BE2;
+    border-bottom: 1px solid #659BE2;
 }

@@ -169,7 +169,8 @@
         drawBookings: function drawBookings(data) {
             var timeline = this,
                 $row,
-                $bed;
+                $bed,
+                $bedLabel;
 
             data.homes.forEach(function (home) {
                 // Create new row
@@ -177,6 +178,7 @@
                 
                 // Add beds
                 home.beds.forEach(function (bed) {
+                    $bedLabel = timeline.drawBedLabel(home.name, bed.id, bed.name);
                     $bed = timeline.drawBed(bed.id, bed.name);
                     
                     // Create each booking rectangle in row
@@ -190,7 +192,7 @@
                             booking.client
                             )
                     });
-                    // DOM is tr > td.row-timeline > div.bookings-container
+                    $row.children[0].children[1].appendChild($bedLabel);
                     $row.children[1].children[0].appendChild($bed);
                 });
                 
@@ -206,15 +208,18 @@
                 heading = document.createElement('td'),
                 bookings = document.createElement('td'),
                 bookingsContainer = document.createElement('div'),
+                bedLabelContainer = document.createElement('div'),
                 div = document.createElement('div'),
                 home = document.createTextNode(name);
 
             heading.className = 'row-heading ' + this.theme;
             bookings.className = 'row-timeline';
             bookingsContainer.className = 'bookings-container';
+            bedLabelContainer.className = 'label-container';
             div.className = this.rowHeadClassName;
             div.appendChild(home);
             heading.appendChild(div);
+            heading.appendChild(bedLabelContainer);
             row.appendChild(heading);
             row.appendChild(bookings);
             bookings.appendChild(bookingsContainer);
@@ -224,10 +229,22 @@
             return row;
         },
         
+        // Add a bed label div element to row heading
+        drawBedLabel: function drawBedLabel(home, id, bedName) {
+            var bed = document.createElement('div'),
+                bedName = document.createTextNode(home + ' - ' + bedName);
+            bed.dataset['id'] = id;
+            bed.className = 'bed-label';
+            bed.appendChild(bedName);
+                        
+            // Add bed container hover and click handlers (available day)
+            //bed.addEventListener('click', this.onClickBed);
+            return bed;
+        },
+        
         // Add a bed div element with a click handler
         drawBed: function drawBed(id, name) {
-            var bed = document.createElement('div'),
-                bedName = document.createTextNode(name);
+            var bed = document.createElement('div');
             bed.id = id;
             bed.className = 'bed';
                         
