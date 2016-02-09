@@ -45,14 +45,25 @@
         </nav>
     </header>
 
-
+    <!-- Nav buttons -->
+    <div class="container">
+        <div class="card-2 green timeline-nav">
+            <div class="row">
+                <div class="col-md-1 nav-btn">
+                    <button class="btn btn-back" onclick="Timeline.back()">&nbsp;</button>
+                </div>
+                <div class="col-md-10">
+                    <h2 class="white centre">Bookings from 08 Feb 2016</h2>
+                </div>
+                <div class="col-md-1 align-right nav-btn">
+                    <button class="btn btn-advance" onclick="Timeline.advance()">&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Timeline Grid -->
     <div class="container">
-        <!-- Nav buttons -->
-        <button class="btn btn-success btn-back" onclick="Timeline.back()">&nbsp;</button>
-        <button class="btn btn-success btn-advance" onclick="Timeline.advance()">&nbsp;</button>
-
         <div class="timeline card-2" id="timeline" data-start="">
             <table class="table">
                 <thead id="timeline-header"></thead>

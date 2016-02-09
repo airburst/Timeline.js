@@ -35,6 +35,10 @@ th.row-timeline-heading, td.row-timeline {
     overflow-y: scroll;
 }
 
+.align-right {
+    text-align: right;
+}
+
 .date {
     width: 30px;
     text-align: center;
@@ -132,16 +136,19 @@ tr.expand .bed {
     background-image: url(../images/timeline-hover.gif);
 }
 
+.nav-btn {
+    padding: 16px;
+}
 .btn-advance,
 .btn-back {
     min-height: 24px;
-    margin-bottom: 5px;
 }
-
 .btn-advance {
-    background: url("../images/ic_keyboard_arrow_right_white_24dp_1x.png") no-repeat center;
+    background: url("../images/ic_keyboard_arrow_right_white_24dp_2x.png") no-repeat center;
 }
-
 .btn-back {
-    background: url("../images/ic_keyboard_arrow_left_white_24dp_1x.png") no-repeat center;
+    background: url("../images/ic_keyboard_arrow_left_white_24dp_2x.png") no-repeat center;
+}
+.centre {
+    text-align: center;
 }

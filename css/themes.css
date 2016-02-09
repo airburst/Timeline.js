@@ -41,6 +41,9 @@ th.row-timeline-heading.green {
     background-color: #2e9e82;
     border-bottom: 1px solid #2e9e82;
 }
+.green.timeline-nav {
+    background-color: #2e9e82;
+}
 
 /* Blue */
 .blue {
@@ -62,4 +65,8 @@ th.row-timeline-heading.blue {
 .blue .bed-label {
     background-color: #659BE2;
     border-bottom: 1px solid #659BE2;
+}
+
+.white {
+    color: white;
 }
