@@ -11,7 +11,7 @@ var bedData = {
                             ref: 'b01',
                             status: 'booked',
                             client: 'Mark Fairhurst',
-                            start: '07/02/2016',
+                            start: '17/02/2016',
                             duration: 999
                         }
                     ]
@@ -39,7 +39,15 @@ var bedData = {
                 {
                     id: 'b003',
                     name: 'bed3',
-                    bookings: []
+                    bookings: [
+                        {
+                            ref: 'b05',
+                            status: 'requested',
+                            client: 'Sarah Payne',
+                            start: '27/02/2016',
+                            duration: 7
+                        }
+                    ]
                 }
             ]
             

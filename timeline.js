@@ -138,7 +138,7 @@
             // Setup header 
             this.width = th2.offsetWidth;
             numberOfDays = parseInt(this.width / this.colWidth, 10);
-            
+                     
             // Draw days into header
             for (d = 0; d < numberOfDays; d++) {
                 this.addDayToHeader(th2, date, this.dayClassName);
@@ -263,7 +263,7 @@
                 offset = this.positionFromDate(start), /* Number of days from start */
                 left = ((offset * 30) < 0) ? 0 : offset * 30,
                 right = ((left + (duration * 30)) > this.width) ? this.width - 1 : (left + (duration * 30) - 1);
-
+            this.debug(left + ', ' + right + ', w=:' + this.width);
             // Only draw booking if it falls in current timeline range
             if ((date < this.endDate) && (date.add(duration, 'days') > this.startDate)) {
                 // Styles
@@ -346,6 +346,10 @@
                     el.removeChild(el.childNodes[0]);
                 }
             }
+        },
+        
+        debug: function (text) {
+            document.getElementById('debug').innerText += text + '\n';
         }
 
     };

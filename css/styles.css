@@ -19,10 +19,12 @@ td.row-timeline {
     background-image: url(../images/timeline.gif); 
 }
 td.row-heading {
-    width: 238px;
+    /*width: 238px;*/
+    width: 20%;
 }
 th.row-timeline-heading, td.row-timeline {
-    width: 902px;
+    /*width: 902px;*/
+    width: 80%;
 }
 .top-margin-60 {
     margin-top: 60px;
@@ -110,10 +112,17 @@ tr.expand .bed {
 
 .booking {
     position: absolute;
+    /*display: none;*/
     text-align: center;
     min-height: 36px;
     padding: 8px;
     margin-bottom: 1px;
+    opacity: 0.3;
+}
+
+tr.expand .booking {
+    /*display: block;*/
+    opacity: 1;
 }
 
 .booking.booked {
@@ -151,4 +160,8 @@ tr.expand .bed {
 }
 .centre {
     text-align: center;
+}
+
+.debug {
+    margin-top: 30px;
 }
